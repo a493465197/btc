@@ -15,20 +15,9 @@ module.exports = app => {
         birth: {
             type: String
         },
-        job: {
-            type: String
-        },
-        xinjin: {
-            type: String
-        },
-        joinDate: {
-            type: String
-        },
-        shangji: {
-            type: String
-        },
-        xiaji: {
-            type: String
+        time: {
+            type: Number,
+            default: () => Date.now()
         },
         isAdmin: {
             type: Boolean,

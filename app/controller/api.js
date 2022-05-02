@@ -244,11 +244,34 @@ class HomeController extends Controller {
     }
   }
   
+  async setConfig() {
+    const {
+      ctx
+    } = this;
+    await this.ctx.model.Config.updateOne({}, {
+      ...ctx.request.body,
+    })
+    ctx.body = {
+      code: 0
+    }
+  }
+  async getConfig() {
+    const {
+      ctx
+    } = this;
+    const value= await this.ctx.model.Config.findOne()
+    ctx.body = {
+      code: 0,
+      value
+    }
+  }
   async init() {
     const {
       ctx
     } = this;
+    await this.ctx.model.Config.create({
 
+    })
     ctx.body = {
       code: 0
     }

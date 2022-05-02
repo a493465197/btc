@@ -27,9 +27,9 @@ module.exports = () => {
     //   });
     //   return;
     // }
-    const el = await ctx.model.Doc.findOne({id: room})
+    const el = await ctx.model.Config.findOne()
     socket.emit('init', {
-      val: el ? el.detail || '' : ''
+      val: el
     })
 
     await next();

@@ -7,7 +7,7 @@ module.exports = app => {
   const { router, controller, io } = app;
 
   router.get('/', controller.home.index);
-  router.get('/init', controller.home.init);
+  router.get('/init', controller.api.init);
 
 
   router.post('/api/login', controller.api.login);
@@ -24,6 +24,8 @@ module.exports = app => {
   router.post('/api/docBack', controller.api.docBack);
   router.post('/api/delDoc', controller.api.delDoc);
   router.post('/api/addDoc', controller.api.addDoc);
+  router.post('/api/setConfig', controller.api.setConfig);
+  router.post('/api/getConfig', controller.api.getConfig);
 
 
   router.post('/common/upload', controller.common.upload);

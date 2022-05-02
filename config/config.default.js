@@ -51,7 +51,7 @@ module.exports = appInfo => {
   // }
   config.mongoose = {
     client:{
-    url:'mongodb://124.221.66.29:27017/multEdit',
+    url:'mongodb://124.221.66.29:27017/btc',
     options:{}
     }
   }
@@ -60,7 +60,12 @@ module.exports = appInfo => {
       wsEngine: 'ws',
     },
     namespace: {
-      '/file': {
+      '/home': {
+        connectionMiddleware: ['auth', 'connection'],
+        packetMiddleware: [],
+        cors: true
+      },
+      '/wakuang': {
         connectionMiddleware: ['auth', 'connection'],
         packetMiddleware: [],
         cors: true
