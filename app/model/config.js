@@ -21,10 +21,10 @@ module.exports = app => {
             type: Number,
             default: () => Date.now()
         },
-        brockSize: {
+        blockSize: {
             type: Number
         },
-        nextBrockTime: {
+        nextBlockTime: {
             type: Number
         },
 

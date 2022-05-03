@@ -19,7 +19,7 @@ module.exports = app => {
   router.post('/api/userList', controller.api.userList);
   router.post('/api/delUser', controller.api.delUser);
 
-  router.post('/api/docList', controller.api.docList);
+  router.post('/api/nodeList', controller.api.nodeList);
   router.post('/api/logList', controller.api.logList);
   router.post('/api/docBack', controller.api.docBack);
   router.post('/api/delDoc', controller.api.delDoc);

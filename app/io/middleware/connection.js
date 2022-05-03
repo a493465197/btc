@@ -6,7 +6,7 @@ module.exports = () => {
   return async (ctx, next) => {
     const { app, socket, logger, helper } = ctx;
     const id = socket.id;
-    const nsp = app.io.of('/file');
+    const nsp = app.io.of('/home');
     const query = socket.handshake.query;
 
     // 用户信息
@@ -27,10 +27,15 @@ module.exports = () => {
     //   });
     //   return;
     // }
-    const el = await ctx.model.Config.findOne()
-    socket.emit('init', {
-      val: el
-    })
+    // const el = await ctx.model.Config.findOne()
+    // socket.emit('init', {
+    //   val: el
+    // })
+
+    const blocks = await ctx.model.Block.find().sort({currHeight: -1})
+    const config = await ctx.model.Config.findOne()
+    socket.emit('init', config)
+    socket.emit('block', blocks)
 
     await next();
 

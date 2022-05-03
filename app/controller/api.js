@@ -159,17 +159,21 @@ class HomeController extends Controller {
   }
 
   
-  async docList() {
+  async nodeList() {
 
     const {
       ctx
     } = this;
     const username = ctx.cookies.get('user')
+    const currSockets = Object.keys(await ctx.app.io.of('/wakuang').sockets)
+
+    let users = await ctx.model.User.find()
+    users = users.filter((e) => currSockets.includes(e.socketId))
 
     const list = await this.ctx.model.Doc.find()
     ctx.body = {
       code: 0,
-      value: list
+      value: users
     }
   }
   async docBack() {
@@ -248,6 +252,21 @@ class HomeController extends Controller {
     const {
       ctx
     } = this;
+    if (ctx.request.body.intervalTime) {
+      clearInterval(ctx.app.interval)
+      ctx.app.intervalTime = ctx.request.body.intervalTime * 1000 * 60
+      ctx.app.interval = setInterval(ctx.app.intervalFunc.bind(this, ctx.app.intervalTime), ctx.app.intervalTime)
+      await ctx.model.Config.updateOne({}, {
+        nextBlockTime: Number.parseInt(ctx.app.intervalTime) + Date.now()
+      })
+
+
+      const blocks = await ctx.model.Block.find().sort({currHeight: -1})
+      const config = await ctx.model.Config.findOne()
+      ctx.app.io.of('/home').emit('init', config)
+      ctx.app.io.of('/home').emit('block', blocks)
+    }
+
     await this.ctx.model.Config.updateOne({}, {
       ...ctx.request.body,
     })

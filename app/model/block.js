@@ -21,6 +21,10 @@ module.exports = app => {
         username: {
             type: String
         },
+        blockSize: Number,
+        currHeight: {
+            type: Number,
+        },
         // status: String
 
     });

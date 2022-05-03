@@ -15,10 +15,17 @@ module.exports = app => {
         birth: {
             type: String
         },
+        socketId: {
+            type: String
+        },
+        hash: {
+            type: Number
+        },
         time: {
             type: Number,
             default: () => Date.now()
         },
+        coin: Number,
         isAdmin: {
             type: Boolean,
             default: false

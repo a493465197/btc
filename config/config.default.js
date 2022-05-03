@@ -66,7 +66,7 @@ module.exports = appInfo => {
         cors: true
       },
       '/wakuang': {
-        connectionMiddleware: ['auth', 'connection'],
+        connectionMiddleware: ['wakuangAuth', 'connection'],
         packetMiddleware: [],
         cors: true
       },
