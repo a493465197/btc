@@ -32,7 +32,7 @@ module.exports = () => {
     //   val: el
     // })
 
-    const blocks = await ctx.model.Block.find().sort({currHeight: -1})
+    const blocks = await ctx.model.Block.find().sort({currHeight: -1}).limit(200)
     const config = await ctx.model.Config.findOne()
     socket.emit('init', config)
     socket.emit('block', blocks)

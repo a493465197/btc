@@ -26,6 +26,8 @@ module.exports = app => {
   router.post('/api/addDoc', controller.api.addDoc);
   router.post('/api/setConfig', controller.api.setConfig);
   router.post('/api/getConfig', controller.api.getConfig);
+  router.post('/api/trans', controller.api.trans);
+  router.post('/api/transList', controller.api.transList);
 
 
   router.post('/common/upload', controller.common.upload);

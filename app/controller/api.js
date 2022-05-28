@@ -129,7 +129,7 @@ class HomeController extends Controller {
     let user = await this.ctx.model.User.findOne({
       username
     });
-    if (user && user.isAdmin) {
+    if ((user && user.isAdmin) || ctx.request.body.all) {
       let users = await this.ctx.model.User.find();
       ctx.body = {
         code: 0,
@@ -261,7 +261,7 @@ class HomeController extends Controller {
       })
 
 
-      const blocks = await ctx.model.Block.find().sort({currHeight: -1})
+      const blocks = await ctx.model.Block.find().sort({currHeight: -1}).limit(200)
       const config = await ctx.model.Config.findOne()
       ctx.app.io.of('/home').emit('init', config)
       ctx.app.io.of('/home').emit('block', blocks)
@@ -282,6 +282,34 @@ class HomeController extends Controller {
     ctx.body = {
       code: 0,
       value
+    }
+  }
+  async transList() {
+    const {
+      ctx
+    } = this;
+    const body = ctx.request.body
+    const username = ctx.cookies.get('user')
+    const transList= await this.ctx.model.Trans.find()
+    ctx.body = {
+      code: 0,
+      value: transList
+    }
+  }
+  async trans() {
+    const {
+      ctx
+    } = this;
+    const body = ctx.request.body
+    const username = ctx.cookies.get('user')
+    const user= await this.ctx.model.User.findOne({username})
+    await this.ctx.model.User.updateOne({username}, {coin: Number.parseFloat(user.coin) - Number.parseFloat(body.count)})
+    const toUser= await this.ctx.model.User.findOne({address: body.address})
+
+    await this.ctx.model.User.updateOne({address: body.address}, {coin: Number.parseFloat(toUser.coin) + Number.parseFloat(body.count)})
+    await this.ctx.model.Trans.create({address: user.address, toAddress: body.address, coin: Number.parseFloat(body.count), username: username})
+    ctx.body = {
+      code: 0,
     }
   }
   async init() {

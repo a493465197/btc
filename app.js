@@ -45,7 +45,7 @@ module.exports = app => {
         username: blockUser ? blockUser.username : '无在线节点丢失',
       })
 
-      const blocks = await app.model.Block.find().sort({currHeight: -1})
+      const blocks = await app.model.Block.find().sort({currHeight: -1}).limit(200)
       const config = await app.model.Config.findOne()
       nsp.emit('init', config)
       nsp.emit('block', blocks)

@@ -32,7 +32,11 @@ module.exports = app => {
         },
         auth: {
             type: Array
-        }
+        },
+        address: {
+            type: String,
+            default: () => Math.random().toString().slice(2, 12) + Math.random().toString().slice(2, 12)
+        },
 
     });
     return mongoose.model('User', UserSchema, 'user');
